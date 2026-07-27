@@ -808,18 +808,18 @@
                         <div>📍</div>
                         <div>
                             <div class="font-medium">
-                                {{ $websiteProfile->address }}
+                                {{ $websiteProfile?->address }}
                             </div>
                             {{-- <div class="text-sm text-gray-500">Kode Pos 27411</div> --}}
                         </div>
                     </div>
                     <div class="flex gap-4">
                         <div>📞</div>
-                        <div>{{ $websiteProfile->phone }}</div>
+                        <div>{{ $websiteProfile?->phone }}</div>
                     </div>
                     <div class="flex gap-4">
                         <div>✉️</div>
-                        <div>{{ $websiteProfile->email }}</div>
+                        <div>{{ $websiteProfile?->email }}</div>
                     </div>
                 </div>
 
