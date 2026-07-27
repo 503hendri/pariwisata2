@@ -29,6 +29,9 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     @vite(['resources/css/app.css', 'resources/css/guest.css', 'resources/js/app.js'])
+
+    @include('partials.google-analytics')
+    
     @fluxAppearance
 </head>
 
