@@ -39,7 +39,7 @@
                 :current="request()->routeIs('admin.news')" wire:navigate>
                 Berita
             </flux:sidebar.item>
-            @role('editor')
+            @role('admin')
                 <flux:sidebar.group expandable icon="cog-6-tooth" heading="Settings" class="grid">
                     <flux:sidebar.item href="{{ route('users.index') }}" :current="request()->routeIs('users.*')"
                         wire:navigate>

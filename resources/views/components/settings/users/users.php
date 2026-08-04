@@ -31,7 +31,7 @@ new class extends Component
     #[Validate('required|string|max:255')]
     public $name = '';
 
-    #[Validate('required|email|max:255')]
+    #[Validate('required|unique:users,email|email|max:255')]
     public $email = '';
 
     #[Validate('required|string|min:8|confirmed')]
