@@ -25,7 +25,7 @@
                 <flux:table.column>Nama</flux:table.column>
                 <flux:table.column>Deskripsi</flux:table.column>
                 <flux:table.column>Galeri</flux:table.column>
-                @role('editor')
+                @role('admin')
                     <flux:table.column>Publikasi</flux:table.column>
                 @endrole
                 <flux:table.column>Aksi</flux:table.column>
@@ -72,7 +72,7 @@
                                 {{ $destination->images->count() }} foto
                             </div>
                         </flux:table.cell>
-                        @role('editor')
+                        @role('admin')
                             <flux:table.cell>
                                 @if ($destination->is_published)
                                     <flux:button wire:click="togglePublish({{ $destination->id }})" icon="check"

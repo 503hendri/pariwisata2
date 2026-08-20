@@ -198,7 +198,7 @@
                     placeholder="Contoh: Senin: 08:00-17:00" />
                 <div class="flex flex-col gap-4">
                     <flux:checkbox label="Populer" wire:model="is_popular" />
-                    @role('editor')
+                    @role('admin')
                         <flux:checkbox label="Publikasi" wire:model="is_published" />
                     @endrole
                 </div>
