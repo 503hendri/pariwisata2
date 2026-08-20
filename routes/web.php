@@ -29,4 +29,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('admin/profile', 'admin.profile')->name('admin.profile');
 });
 
+Route::get('/debug-proxy', function (Request $request) {
+    return response()->json([
+        'url' => $request->url(),
+        'full_url' => $request->fullUrl(),
+
+        'scheme' => $request->getScheme(),
+        'is_secure' => $request->isSecure(),
+
+        'host' => $request->getHost(),
+        'port' => $request->getPort(),
+
+        'http_host' => $request->header('Host'),
+        'x_forwarded_for' => $request->header('X-Forwarded-For'),
+        'x_forwarded_host' => $request->header('X-Forwarded-Host'),
+        'x_forwarded_proto' => $request->header('X-Forwarded-Proto'),
+        'x_forwarded_port' => $request->header('X-Forwarded-Port'),
+
+        'app_url' => config('app.url'),
+    ]);
+});
+
 require __DIR__.'/settings.php';
