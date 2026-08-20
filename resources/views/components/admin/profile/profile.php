@@ -71,8 +71,6 @@ new #[Layout('layouts.app')] class extends Component
             $this->youtube = $this->profile->youtube ?? '';
             $this->facebook = $this->profile->facebook ?? '';
             $this->tiktok = $this->profile->tiktok ?? '';
-        } else {
-            $this->name = env('APP_NAME');
         }
     }
 

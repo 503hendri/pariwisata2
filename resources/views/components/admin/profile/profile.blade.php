@@ -19,7 +19,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <flux:input wire:model="name" label="Nama Website" placeholder="Masukkan nama website" required readonly />
+                <flux:input wire:model="name" label="Nama Website" placeholder="Masukkan nama website" />
                 <flux:input wire:model="tagline" label="Tagline" placeholder="Masukkan tagline website" />
             </div>
 
