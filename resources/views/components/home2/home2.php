@@ -109,7 +109,10 @@ class extends Component
     #[Computed]
     public function events()
     {
-        return Event::where('date_start', '>=', now())->orderBy('date_start')->get();
+        return Event::where('date_start', '>=', now())
+            ->whereYear('date_start', now()->year)
+            ->orderBy('date_start')
+            ->get();
     }
 
     #[Computed]
