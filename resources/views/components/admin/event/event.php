@@ -40,10 +40,10 @@ new class extends Component
     public $location = '';
 
     #[Validate('nullable|numeric|min:-90|max:90')]
-    public $latitude = '';
+    public $latitude = 0;
 
     #[Validate('nullable|numeric|min:-180|max:180')]
-    public $longitude = '';
+    public $longitude = 0;
 
     #[Validate('nullable|numeric|min:0')]
     public $ticket_price = '';

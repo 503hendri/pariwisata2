@@ -34,7 +34,11 @@ new #[Layout('layouts.guest')] class extends Component
     #[Computed]
     public function events()
     {
-        return Event::where('is_published', true)->where('date_start', '>=', now())->orderBy('date_start')->get();
+        return Event::query()
+            ->where('is_published', true)
+            ->whereBetween('date_start', [now()->startOfYear(), now()->endOfYear()])
+            ->orderBy('date_start')
+            ->get();
     }
 
     #[Computed]

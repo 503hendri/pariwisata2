@@ -32,7 +32,7 @@
                 <flux:table.column>Tanggal</flux:table.column>
                 <flux:table.column>Tiket</flux:table.column>
                 <flux:table.column>Organizer</flux:table.column>
-                @role('editor')
+                @role('admin')
                     <flux:table.column>Publikasi</flux:table.column>
                 @endrole
                 <flux:table.column>Aksi</flux:table.column>
@@ -61,7 +61,7 @@
                         <flux:table.cell class="whitespace-normal">
                             {{ $event->organizer ? $event->organizer : '' }}
                         </flux:table.cell>
-                        @role('editor')
+                        @role('admin')
                             <flux:table.cell>
                                 @if ($event->is_published)
                                     <flux:button wire:click="togglePublish({{ $event->id }})" variant="primary"
