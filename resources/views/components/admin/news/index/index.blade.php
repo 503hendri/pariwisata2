@@ -4,9 +4,17 @@
             <h1 class="text-2xl font-bold">Berita</h1>
             <p class="text-gray-500">Daftar berita</p>
         </div>
-        <flux:button href="{{ route('admin.news.create') }}" icon="plus" variant="primary" color="green" wire:navigate>
-            Tambah Berita
-        </flux:button>
+        <div class="flex items-center gap-2">
+            @if ($this->pendingComments->count() > 0)
+                <flux:button icon="chat-bubble-left-right" variant="outline" color="amber"
+                    x-on:click="$flux.modal('news-pending-comments').show()">
+                    {{ $this->pendingComments->count() }} Komentar Menunggu
+                </flux:button>
+            @endif
+            <flux:button href="{{ route('admin.news.create') }}" icon="plus" variant="primary" color="green" wire:navigate>
+                Tambah Berita
+            </flux:button>
+        </div>
     </div>
 
     <flux:separator class="my-4" />
@@ -150,6 +158,74 @@
             @endif
         </div>
     </flux:modal>
+
+    <flux:modal name="news-comments" class="w-full max-w-3xl" :dismissible="false">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold">Komentar - {{ $this->selectedNews?->title }}</h2>
+                <flux:button variant="ghost" icon="x-mark" x-on:click="$flux.modal('news-comments').close()" />
+            </div>
+
+            @if ($this->selectedNews?->comments?->count() > 0)
+                <div class="space-y-4 max-h-[60vh] overflow-y-auto">
+                    @foreach ($this->selectedNews->comments as $comment)
+                        <div class="p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <span class="font-bold text-gray-900 dark:text-white">{{ $comment->name ?? $comment->user->name }}</span>
+                                    @if ($comment->email)
+                                        <span class="text-xs text-gray-500 ml-1">({{ $comment->email }})</span>
+                                    @endif
+                                    <span class="text-xs text-gray-400 ml-2">{{ $comment->created_at->diffForHumans() }}</span>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full">Menunggu</span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{{ $comment->content }}</p>
+                            <div class="flex gap-2">
+                                <flux:button wire:click="approveComment({{ $comment->id }})" icon="check" variant="primary" color="green" size="sm">Setujui</flux:button>
+                                <flux:button wire:click="rejectComment({{ $comment->id }})" icon="x-mark" variant="primary" color="red" size="sm">Tolak</flux:button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="text-gray-500 dark:text-gray-400 text-center py-8">Belum ada komentar menunggu persetujuan.</p>
+            @endif
+        </div>
+    </flux:modal>
+
+    @if ($this->pendingComments->count() > 0)
+        <flux:modal name="news-pending-comments" class="w-full max-w-3xl" :dismissible="false">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">Komentar Menunggu Persetujuan ({{ $this->pendingComments->count() }})</h2>
+                    <flux:button variant="ghost" icon="x-mark" x-on:click="$flux.modal('news-pending-comments').close()" />
+                </div>
+                <div class="space-y-4 max-h-[60vh] overflow-y-auto">
+                    @foreach ($this->pendingComments as $comment)
+                        <div class="p-4 bg-gray-50 dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700">
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <span class="font-bold text-gray-900 dark:text-white">{{ $comment->name ?? $comment->user->name }}</span>
+                                    @if ($comment->email)
+                                        <span class="text-xs text-gray-500 ml-1">({{ $comment->email }})</span>
+                                    @endif
+                                    <span class="text-xs text-gray-400 ml-2">{{ $comment->created_at->diffForHumans() }}</span>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full">Menunggu</span>
+                            </div>
+                            <a href="{{ route('news.show', $comment->news->slug) }}" class="text-xs text-blue-600 dark:text-blue-400 hover:underline block mb-2">{{ $comment->news->title }}</a>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{{ $comment->content }}</p>
+                            <div class="flex gap-2">
+                                <flux:button wire:click="approveComment({{ $comment->id }})" icon="check" variant="primary" color="green" size="sm">Setujui</flux:button>
+                                <flux:button wire:click="rejectComment({{ $comment->id }})" icon="x-mark" variant="primary" color="red" size="sm">Tolak</flux:button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </flux:modal>
+    @endif
 
     <flux:modal name="news-delete-confirmation" :dismissible="false">
         <div class="p-6">

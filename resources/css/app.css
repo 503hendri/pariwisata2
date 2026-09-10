@@ -61,6 +61,92 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
+.tiptap {
+    @apply outline-none min-h-[280px];
+}
+
+.tiptap p {
+    @apply my-3;
+}
+
+.tiptap h1 {
+    @apply text-3xl font-bold my-4;
+}
+
+.tiptap h2 {
+    @apply text-2xl font-bold my-4;
+}
+
+.tiptap h3 {
+    @apply text-xl font-bold my-3;
+}
+
+.tiptap h4 {
+    @apply text-lg font-bold my-3;
+}
+
+.tiptap h5 {
+    @apply text-base font-bold my-2;
+}
+
+.tiptap h6 {
+    @apply text-sm font-bold my-2 uppercase tracking-wide;
+}
+
+.tiptap ul {
+    @apply list-disc pl-6 my-3;
+}
+
+.tiptap ol {
+    @apply list-decimal pl-6 my-3;
+}
+
+.tiptap ul li,
+.tiptap ol li {
+    @apply my-1;
+}
+
+.tiptap blockquote {
+    @apply border-l-4 border-blue-400 dark:border-blue-600 pl-4 italic my-4 text-gray-600 dark:text-gray-400;
+}
+
+.tiptap pre {
+    @apply bg-gray-900 dark:bg-gray-950 text-gray-100 rounded-lg p-4 my-4 overflow-x-auto font-mono text-sm;
+}
+
+.tiptap code {
+    @apply bg-gray-100 dark:bg-gray-800 rounded px-1.5 py-0.5 font-mono text-sm;
+}
+
+.tiptap pre code {
+    @apply bg-transparent p-0 text-gray-100;
+}
+
+.tiptap mark {
+    @apply bg-yellow-200 dark:bg-yellow-600 px-1 rounded;
+}
+
+.tiptap a {
+    @apply text-blue-500 underline hover:text-blue-700 dark:text-blue-400 cursor-pointer;
+}
+
+.tiptap img {
+    @apply rounded-lg max-w-full h-auto my-4;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #9ca3af;
+    pointer-events: none;
+    height: 0;
+    font-style: italic;
+}
+
+.ProseMirror-focused {
+    @apply outline-none;
+}
+
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */

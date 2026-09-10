@@ -23,4 +23,19 @@ class News extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function approvedComments()
+    {
+        return $this->hasMany(Comment::class)->where('is_approved', true)->whereNull('parent_id')->with(['replies' => fn ($q) => $q->where('is_approved', true)]);
+    }
 }
