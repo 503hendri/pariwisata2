@@ -53,7 +53,7 @@
                             </div>
 
                             <p class="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-6 flex-grow">
-                                {{ $destination['description'] }}
+                                {!! Str::limit(strip_tags($destination['description'] ?? ''), 120) !!}
                             </p>
 
                             <button

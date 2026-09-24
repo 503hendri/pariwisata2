@@ -105,14 +105,18 @@
             <div class="px-6 py-8 flex flex-col gap-y-6 text-lg font-medium">
                 <a href="#destinations" @click="open = false"
                     class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Destinasi</a>
+                <a href="#news" @click="open = false"
+                    class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Berita</a>
                 <a href="#why" @click="open = false"
                     class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Mengapa Sawahlunto</a>
-                <a href="#map" @click="open = false"
-                    class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Peta Interaktif</a>
+                {{-- <a href="#map" @click="open = false"
+                    class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Peta Interaktif</a> --}}
                 <a href="#events" @click="open = false"
                     class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Event</a>
                 <a href="#culinary" @click="open = false"
                     class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Kuliner</a>
+                <a href="#accommodation" @click="open = false"
+                    class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Penginapan</a>
                 <a href="#plan" @click="open = false"
                     class="text-[#1C1C1C] hover:text-[#C6A75E] transition-colors">Rencanakan Perjalanan</a>
 

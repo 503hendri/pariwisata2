@@ -98,7 +98,7 @@
 
                             <p class="text-sm text-gray-500 line-clamp-2">
 
-                                {{ Str::limit($destination->description, 120) }}
+                                {!! Str::limit(strip_tags($destination->description ?? ''), 120) !!}
 
                             </p>
 

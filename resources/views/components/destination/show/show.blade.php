@@ -184,7 +184,7 @@
                 </h2>
 
                 <p class="text-gray-600 leading-relaxed">
-                    {{ $destination->description }}
+                    {!! $destination->description !!}
                 </p>
 
             </div>

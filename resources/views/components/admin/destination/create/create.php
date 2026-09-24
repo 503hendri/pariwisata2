@@ -77,6 +77,9 @@ new class extends Component
     #[Validate('nullable|boolean')]
     public $is_published = false;
 
+    #[Validate('nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120')]
+    public $inlineImage;
+
     public function updatedThumbnail()
     {
         $this->thumbnailPreview = $this->thumbnail->temporaryUrl();
@@ -194,5 +197,17 @@ new class extends Component
             $this->destination->thumbnail ? $this->thumbnailPreview = asset('storage/'.$this->destination->thumbnail) : null;
             $this->destination->cover ? $this->coverPreview = asset('storage/'.$this->destination->cover) : null;
         }
+    }
+    
+    public function uploadInlineImage()
+    {
+        $this->validateOnly('inlineImage');
+
+        $path = $this->inlineImage->store('destinations/content', 'public');
+        $url = asset('storage/'.$path);
+
+        $this->inlineImage = null;
+
+        return $url;
     }
 };

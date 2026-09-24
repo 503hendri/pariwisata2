@@ -27,7 +27,214 @@
             </h3>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <flux:input label="Nama Destinasi" wire:model="name" required />
-                <flux:textarea label="Deskripsi" wire:model="description" required class="lg:col-span-2" />
+                {{-- <flux:textarea label="Deskripsi" wire:model="description" required class="lg:col-span-2" /> --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Konten Berita
+                    </label>
+
+                    <div x-data="{ content: @entangle('description').live, ...setupEditor() }" x-init="() => init($refs.editor)" wire:ignore
+                        class="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
+
+                        <template x-if="isLoaded()">
+                            <div
+                                class="flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                                <button type="button" @click="toggleBold()"
+                                    :class="isActive('bold', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors"
+                                    title="Bold">
+                                    B
+                                </button>
+                                <button type="button" @click="toggleItalic()"
+                                    :class="isActive('italic', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors italic">
+                                    I
+                                </button>
+                                <button type="button" @click="toggleUnderline()"
+                                    :class="isActive('underline', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors underline">
+                                    U
+                                </button>
+                                <button type="button" @click="toggleStrike()"
+                                    :class="isActive('strike', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors line-through">
+                                    S
+                                </button>
+                                <button type="button" @click="toggleHighlight()"
+                                    :class="isActive('highlight', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors"
+                                    title="Highlight">
+                                    H
+                                </button>
+
+                                <span class="w-px h-6 bg-zinc-300 dark:bg-zinc-600 mx-1"></span>
+
+                                <button type="button"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors font-bold text-sm"
+                                    @click="toggleHeading({ level: 1 })"
+                                    :class="isActive('heading', { level: 1 }, updatedAt) ?
+                                        '!bg-zinc-900 !text-white dark:!bg-white dark:!text-zinc-900' : ''">
+                                    H1
+                                </button>
+                                <button type="button"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors font-bold text-sm"
+                                    @click="toggleHeading({ level: 2 })"
+                                    :class="isActive('heading', { level: 2 }, updatedAt) ?
+                                        '!bg-zinc-900 !text-white dark:!bg-white dark:!text-zinc-900' : ''">
+                                    H2
+                                </button>
+                                <button type="button"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors font-bold text-sm"
+                                    @click="toggleHeading({ level: 3 })"
+                                    :class="isActive('heading', { level: 3 }, updatedAt) ?
+                                        '!bg-zinc-900 !text-white dark:!bg-white dark:!text-zinc-900' : ''">
+                                    H3
+                                </button>
+                                <button type="button"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors font-bold text-sm"
+                                    @click="toggleHeading({ level: 4 })"
+                                    :class="isActive('heading', { level: 4 }, updatedAt) ?
+                                        '!bg-zinc-900 !text-white dark:!bg-white dark:!text-zinc-900' : ''">
+                                    H4
+                                </button>
+                                <button type="button"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors text-sm"
+                                    @click="setParagraph()"
+                                    :class="isActive('paragraph', {}, updatedAt) ?
+                                        '!bg-zinc-900 !text-white dark:!bg-white dark:!text-zinc-900' : ''">
+                                    P
+                                </button>
+
+                                <span class="w-px h-6 bg-zinc-300 dark:bg-zinc-600 mx-1"></span>
+
+                                <button type="button" @click="setAlign('left')"
+                                    :class="isActive({ textAlign: 'left' }, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    L
+                                </button>
+                                <button type="button" @click="setAlign('center')"
+                                    :class="isActive({ textAlign: 'center' }, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    C
+                                </button>
+                                <button type="button" @click="setAlign('right')"
+                                    :class="isActive({ textAlign: 'right' }, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    R
+                                </button>
+                                <button type="button" @click="setAlign('justify')"
+                                    :class="isActive({ textAlign: 'justify' }, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    J
+                                </button>
+
+                                <span class="w-px h-6 bg-zinc-300 dark:bg-zinc-600 mx-1"></span>
+
+                                <button type="button" @click="toggleBulletList()"
+                                    :class="isActive('bulletList', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    •
+                                </button>
+                                <button type="button" @click="toggleOrderedList()"
+                                    :class="isActive('orderedList', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    1.
+                                </button>
+                                <button type="button" @click="toggleBlockquote()"
+                                    :class="isActive('blockquote', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors">
+                                    "
+                                </button>
+                                <button type="button" @click="toggleCodeBlock()"
+                                    :class="isActive('codeBlock', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors font-mono text-xs">
+                                    &lt;/&gt;
+                                </button>
+
+                                <span class="w-px h-6 bg-zinc-300 dark:bg-zinc-600 mx-1"></span>
+
+                                <button type="button" @click="undo()"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors">
+                                    Undo
+                                </button>
+                                <button type="button" @click="redo()"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors">
+                                    Redo
+                                </button>
+
+                                <span class="w-px h-6 bg-zinc-300 dark:bg-zinc-600 mx-1"></span>
+
+                                <button type="button" @click="document.getElementById('tiptap-image-input').click()"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors"
+                                    title="Upload gambar ke konten">
+                                    📷 Upload
+                                </button>
+                                <button type="button" @click="addImage()"
+                                    class="flex items-center px-3 py-1 bg-zinc-200 dark:bg-zinc-700 rounded-lg shadow-xs cursor-pointer hover:bg-zinc-300 transition-colors"
+                                    title="Sisipkan gambar dari URL">
+                                    URL
+                                </button>
+                                <button type="button" @click="setLink()"
+                                    :class="isActive('link', {}, updatedAt) ?
+                                        'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900' :
+                                        'bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300'"
+                                    class="flex items-center px-3 py-1 rounded-lg shadow-xs cursor-pointer transition-colors"
+                                    title="Link">
+                                    🔗
+                                </button>
+                            </div>
+                        </template>
+
+                        <div x-ref="editor" class="min-h-[300px] bg-white dark:bg-zinc-900"></div>
+                    </div>
+
+                    <input type="file" id="tiptap-image-input" class="hidden" accept="image/*"
+                        @change="
+                            const file = $event.target.files[0];
+                            if (!file) return;
+                            const alpineData = Alpine.$data($el.closest('.space-y-6').querySelector('[x-data]'));
+                            $wire.upload('inlineImage', file,
+                                () => {
+                                    $wire.call('uploadInlineImage').then((url) => {
+                                        if (url && alpineData && typeof alpineData.insertImageUrl === 'function') {
+                                            alpineData.insertImageUrl(url);
+                                        }
+                                    });
+                                }
+                            );
+                            $event.target.value = '';
+                        " />
+
+                    @error('description')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
         </div>
 
