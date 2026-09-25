@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Accomodation;
 use App\Models\Culinary;
 use App\Models\Destination;
 use App\Models\Event;
-use App\Models\Accomodation;
 use App\Models\News;
 use App\Models\WebsiteProfile;
 use App\Services\WeatherService;
@@ -57,6 +57,17 @@ new #[Layout('layouts.guest')] class extends Component
     public function news()
     {
         return News::where('is_published', true)->latest()->limit(10)->get();
+    }
+
+    #[Computed]
+    public function stats(): array
+    {
+        return [
+            'destinations' => Destination::where('is_published', true)->count(),
+            'events' => Event::where('is_published', true)
+                ->whereBetween('date_start', [now()->startOfYear(), now()->endOfYear()])
+                ->count(),
+        ];
     }
 
     public function mount()

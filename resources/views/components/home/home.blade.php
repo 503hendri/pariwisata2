@@ -148,6 +148,7 @@
                 </div>
 
                 <!-- Stats Row -->
+                {{-- ===== STATS ROW (DIGANTI) — blok asli disimpan untuk rollback =====
                 <div class="flex items-center justify-center gap-8 md:gap-16 animate-fade-in-up"
                     style="animation-delay: 0.6s;">
                     <div class="text-center">
@@ -165,6 +166,40 @@
                         <div class="text-white/50 text-xs uppercase tracking-[0.25em] mt-1">Pengunjung/Tahun</div>
                     </div>
                 </div>
+                ===== END BLOK ASLI ===== --}}
+
+                {{-- ===== STATS ROW (BARU) — fakta & angka terverifikasi, tanpa data karangan =====
+                     Keputusan desain:
+                     - Tiga angka inti (bukan empat) supaya tidak ada kolom pengisi.
+                     - Label pakai huruf normal, bukan UPPERCASE tracking lebar (pola slop).
+                     - Setiap item diberi garis emas sebagai penanda, aksen dipakai hemat.
+                     - Warisan Dunia tetap ditampilkan karena terverifikasi (UNESCO 2019). --}}
+                {{-- <dl
+                    class="grid grid-cols-1 sm:grid-cols-3 gap-px max-w-2xl mx-auto bg-white/15 animate-fade-in-up"
+                    style="animation-delay: 0.6s;">
+
+                    <div class="bg-[#0a0a0a]/0 text-center px-6 py-5 sm:border-none border-b border-white/15 sm:border-b-0">
+                        <dd class="heading-font text-4xl md:text-5xl font-bold text-[#C6A75E] leading-none">
+                            {{ $this->stats['destinations'] }}
+                        </dd>
+                        <dt class="text-white/70 text-sm mt-3">Destinasi wisata</dt>
+                    </div>
+
+                    <div class="bg-[#0a0a0a]/0 text-center px-6 py-5 border-b border-white/15 sm:border-b-0 sm:border-x sm:border-x-white/15">
+                        <dd class="heading-font text-4xl md:text-5xl font-bold text-[#C6A75E] leading-none">
+                            {{ $this->stats['events'] }}
+                        </dd>
+                        <dt class="text-white/70 text-sm mt-3">Agenda budaya tahun ini</dt>
+                    </div>
+
+                    <div class="bg-[#0a0a0a]/0 text-center px-6 py-5">
+                        <dd class="heading-font text-4xl md:text-5xl font-bold text-[#C6A75E] leading-none">
+                            2019
+                        </dd>
+                        <dt class="text-white/70 text-sm mt-3">Ditetapkan Warisan Dunia</dt>
+                    </div>
+                </dl> --}}
+                {{-- ===== END STATS ROW (BARU) ===== --}}
             </div>
         </div>
 
