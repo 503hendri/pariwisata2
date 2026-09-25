@@ -176,4 +176,9 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
 
+<!-- antislop:start -->
+## antislop
+For UI, copy, people, mobile layout, or code comments work, read `antislop.md` (core).
+Before starting, ask the user when antislop applies: during the work, or after it is done.
+<!-- antislop:end -->
 </laravel-boost-guidelines>

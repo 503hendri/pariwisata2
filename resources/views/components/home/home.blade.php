@@ -374,40 +374,38 @@
     </section>
 
     <!-- EVENTS -->
-    <section wire:ignore id="events" class="py-24 bg-white" data-aos="fade-up" data-aos-duration="1000"
+    {{-- WHY SECTION: Agenda budaya tahunan (SIMFes, Songket Carnival) adalah alasan utama kunjungan berulang, bukan sekadar pelengkap konten (R-05). --}}
+    <section wire:ignore id="events" class="py-24 bg-white dark:bg-zinc-900" data-aos="fade-up" data-aos-duration="1000"
         data-aos-delay="500">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-center mb-12">
-                <h2 class="heading-font text-5xl font-bold">Event &amp; Festival</h2>
-                {{-- <a href="#" class="flex items-center gap-2 text-[#C6A75E]">Lihat Kalender Lengkap →</a> --}}
-            </div>
+            <x-ds.section-header
+                eyebrow="Kalender Budaya"
+                title="Event &amp; Festival"
+                description="Kemeriahan tahunan yang menghidupkan tradisi di ruang publik kota warisan dunia." />
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Event Card -->
                 @forelse($this->events as $event)
-                <div class="bg-white border border-gray-100 rounded-3xl overflow-hidden">
-                    <div class="h-64 bg-gray-200">
-                        <img src="{{ Storage::url($event->cover, 'events') }}" alt="{{ $event->name }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-8">
-                        <div class="text-[#C6A75E] text-xs font-medium">{{ $event->date_start }} -
-                            {{ $event->date_end }}
+                    <x-ds.card>
+                        <div class="h-64 bg-zinc-200 dark:bg-zinc-800">
+                            <img src="{{ Storage::url($event->cover, 'events') }}" alt="{{ $event->name }}"
+                                class="w-full h-full object-cover">
                         </div>
-                        <h4 class="heading-font text-2xl mt-2">{{ $event->name }}</h4>
-                        <p class="text-sm text-gray-600 mt-4">{{ $event->description }}</p>
-                    </div>
-                </div>
+                        <div class="p-8">
+                            <div class="text-[#C6A75E] text-xs font-medium tracking-wider uppercase">{{ $event->date_start }} -
+                                {{ $event->date_end }}
+                            </div>
+                            <h4 class="heading-font text-2xl mt-2 text-zinc-900 dark:text-white">{{ $event->name }}</h4>
+                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-4">{{ $event->description }}</p>
+                        </div>
+                    </x-ds.card>
                 @empty
-                <div class="col-span-3 text-center py-12">
-                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    <p class="text-gray-500">Tidak ada event yang tersedia saat ini.</p>
-                </div>
+                    <div class="col-span-3">
+                        <x-ds.empty-state
+                            icon="calendar"
+                            title="Tidak ada event saat ini"
+                            description="Belum ada event yang dijadwalkan. Kembali lagi nanti untuk agenda budaya terbaru." />
+                    </div>
                 @endforelse
 
             </div>

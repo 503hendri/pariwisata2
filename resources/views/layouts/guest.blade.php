@@ -245,61 +245,63 @@
 
                 <div>
                     <h4 class="text-white font-bold text-lg mb-6">Tourist Services</h4>
+                    {{-- TODO: replace with real routes when these pages exist --}}
                     <ul class="space-y-3 text-sm">
                         <li>
-                            <a href="#" class="hover:text-green-400 transition flex items-center gap-3 group">
+                            <span class="flex items-center gap-3 cursor-not-allowed opacity-70"
+                                title="Coming soon">
                                 <span
-                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center group-hover:bg-green-700 transition">
+                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </span>
-                                <span class="text-stone-400 group-hover:text-white transition">Tourist Information
-                                    Center</span>
-                            </a>
+                                <span class="text-stone-400">Tourist Information Center (Soon)</span>
+                            </span>
                         </li>
                         <li>
-                            <a href="#" class="hover:text-green-400 transition flex items-center gap-3 group">
+                            <span class="flex items-center gap-3 cursor-not-allowed opacity-70"
+                                title="Coming soon">
                                 <span
-                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center group-hover:bg-green-700 transition">
+                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
                                 </span>
-                                <span class="text-stone-400 group-hover:text-white transition">Emergency
-                                    Services</span>
-                            </a>
+                                <span class="text-stone-400">Emergency Services (Soon)</span>
+                            </span>
                         </li>
                         <li>
-                            <a href="#" class="hover:text-green-400 transition flex items-center gap-3 group">
+                            <span class="flex items-center gap-3 cursor-not-allowed opacity-70"
+                                title="Coming soon">
                                 <span
-                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center group-hover:bg-green-700 transition">
+                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 7m0 13V7" />
                                     </svg>
                                 </span>
-                                <span class="text-stone-400 group-hover:text-white transition">Transportation
-                                    Guide</span>
-                            </a>
+                                <span class="text-stone-400">Transportation Guide (Soon)</span>
+                            </span>
                         </li>
                         <li>
-                            <a href="#" class="hover:text-green-400 transition flex items-center gap-3 group">
+                            <span class="flex items-center gap-3 cursor-not-allowed opacity-70"
+                                title="Coming soon">
                                 <span
-                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center group-hover:bg-green-700 transition">
+                                    class="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
                                     </svg>
                                 </span>
-                                <span class="text-stone-400 group-hover:text-white transition">Tour Packages</span>
-                            </a>
+                                <span class="text-stone-400">Tour Packages (Soon)</span>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -366,9 +368,9 @@
                         &copy; {{ date('Y') }} <span class="text-green-500 font-semibold">{{ $footerName }}</span>. All rights reserved.
                     </p>
                     <div class="flex gap-6 text-sm text-stone-500">
-                        <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition">Terms of Service</a>
-                        <a href="#" class="hover:text-white transition">Sitemap</a>
+                        <a href="#" class="cursor-not-allowed opacity-70" title="Coming soon">Privacy Policy (Soon)</a>
+                        <a href="#" class="cursor-not-allowed opacity-70" title="Coming soon">Terms of Service (Soon)</a>
+                        <a href="#" class="cursor-not-allowed opacity-70" title="Coming soon">Sitemap (Soon)</a>
                     </div>
                 </div>
             </div>
