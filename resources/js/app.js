@@ -143,6 +143,34 @@ window.setupEditor = function () {
     };
 };
 
+document.addEventListener('alpine:init', () => {
+    Alpine.data('heroSlider', (slides, delay) => ({
+        slides: slides,
+        current: 0,
+        timer: null,
+        touchStartX: 0,
+        start() {
+            if (this.timer) clearInterval(this.timer);
+            this.timer = setInterval(() => this.next(), delay);
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) this.pause();
+                else this.start();
+            });
+        },
+        pause() { if (this.timer) clearInterval(this.timer); },
+        resume() { this.start(); },
+        next() { this.current = (this.current + 1) % this.slides.length; },
+        prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length; },
+        goTo(i) { this.current = i; },
+        onTouchStart(e) { this.touchStartX = e.changedTouches[0].screenX; },
+        onTouchEnd(e) {
+            let delta = e.changedTouches[0].screenX - this.touchStartX;
+            if (delta > 50) this.prev();
+            else if (delta < -50) this.next();
+        }
+    }));
+});
+
 function initDestinationSwiper() {
     const el = document.querySelector(".destinations-swiper");
 

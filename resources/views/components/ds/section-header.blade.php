@@ -30,18 +30,28 @@
 @endphp
 
 <div class="flex flex-col {{ $alignClasses }} mb-10 md:mb-12">
-    @if ($eyebrow)
-        <div class="flex flex-col {{ $align === 'center' ? 'items-center' : '' }} mb-3">
-            <span class="{{ $eyebrowClasses }}">{{ $eyebrow }}</span>
-            <div class="{{ $dividerClass }} w-12 h-0.5 bg-[#C6A75E] mt-2"></div>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full gap-4">
+        <div class="flex flex-col {{ $alignClasses }}">
+            @if ($eyebrow)
+                <div class="flex flex-col {{ $align === 'center' ? 'items-center' : '' }} mb-3">
+                    <span class="{{ $eyebrowClasses }}">{{ $eyebrow }}</span>
+                    <div class="{{ $dividerClass }} w-12 h-0.5 bg-[#C6A75E] mt-2"></div>
+                </div>
+            @endif
+
+            @if ($title)
+                <h2 class="{{ $titleClasses }}">{{ $title }}</h2>
+            @endif
+
+            @if ($description)
+                <p class="{{ $descriptionClasses }}">{{ $description }}</p>
+            @endif
         </div>
-    @endif
-    
-    @if ($title)
-        <h2 class="{{ $titleClasses }}">{{ $title }}</h2>
-    @endif
-    
-    @if ($description)
-        <p class="{{ $descriptionClasses }}">{{ $description }}</p>
-    @endif
+        
+        @if(isset($trailing))
+            <div class="flex-shrink-0">
+                {{ $trailing }}
+            </div>
+        @endif
+    </div>
 </div>

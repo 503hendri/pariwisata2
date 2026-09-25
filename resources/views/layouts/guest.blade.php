@@ -49,7 +49,7 @@
             <div class="flex items-center gap-x-3">
                 <img src="{{ $logoUrl }}" alt="{{ $brandName }} Logo" class="h-10 object-contain">
                 <div class="md:block hidden">
-                    <span class="heading-font text-2xl tracking-tight text-[#1C1C1C] dark:text-white">{{ $brandName }}</span>
+                    <span class="heading-font text-2xl tracking-tight text-[#1C1C1C] dark:text-white">SAWAHLUNTO</span>
                     <span class="text-sm text-[#C6A75E] block -mt-1 tracking-[2px]">TOURISM</span>
                 </div>
             </div>

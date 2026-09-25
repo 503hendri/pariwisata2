@@ -73,105 +73,155 @@
         </div>
     </section> --}}
 
-    <section id="hero" wire:poll.6500ms="nextSlide"
-        class="relative h-screen flex items-center justify-center text-center overflow-hidden bg-[#111]">
-        <div
-            class="absolute left-[-5%] top-16 w-72 h-72 rounded-full bg-[#C6A75E]/20 blur-3xl animate-float-slow opacity-70">
-        </div>
-        <div class="absolute right-0 top-1/3 w-96 h-96 rounded-full bg-white/10 blur-3xl animate-pulse opacity-60"></div>
+    <section id="hero"
+        x-data="heroSlider({{ Illuminate\Support\Js::from($this->coverSlides) }}, 6500)"
+        x-cloak
+        x-init="start()"
+        @touchstart.passive="onTouchStart($event)" @touchend.passive="onTouchEnd($event)"
+        class="relative h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
 
+        <!-- Slide Background (crossfade, no scale jump) -->
         <div class="absolute inset-0 z-0">
-            @foreach ($this->coverSlides as $index => $slide)
-                <div wire:key="hero-slide-{{ $index }}"
-                    class="hero-slide absolute inset-0 transition-all duration-1000 ease-in-out {{ $this->currentSlide === $index ? 'opacity-100 scale-100 z-0' : 'opacity-0 scale-105 z-[-1]' }}">
-                    <img src="{{ $slide }}" alt="Slide Background"
-                        class="absolute inset-0 w-full h-full object-cover object-center" />
-                    <div class="absolute inset-0 bg-black/30"></div>
+            <template x-for="(slide, index) in slides" :key="index">
+                <div class="hero-slide absolute inset-0" :class="{ 'is-active': current === index }">
+                    <img :src="slide" alt="Slide Background"
+                        class="absolute inset-0 w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black/40"></div>
                 </div>
-            @endforeach
-
-            @if (count($this->coverSlides) === 0)
-                <div class="absolute inset-0 bg-[#111]"></div>
-            @endif
+            </template>
+            <div x-show="slides.length === 0" class="absolute inset-0 bg-[#0a0a0a]"></div>
         </div>
 
-        <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#1C1C1C]/90 z-10"></div>
+        <!-- Gradient Overlays -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/40 z-10 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10 pointer-events-none"></div>
 
-        <div class="container mx-auto px-4 relative z-20">
-            <div
-                class="mx-auto max-w-6xl rounded-[2rem] border border-white/10 bg-black/50 p-10 shadow-2xl backdrop-blur-xl opacity-90">
-                <div
-                    class="mb-6 inline-flex items-center rounded-full bg-[#C6A75E]/15 px-4 py-2 text-sm font-semibold text-[#C6A75E] shadow-sm animate-pulse">
-                    <span class="block h-2.5 w-2.5 rounded-full bg-[#C6A75E] mr-3"></span>
-                    Eksplorasi tempat terbaik di Sawahlunto
+        <!-- Floating Ambient Orbs -->
+        <div class="absolute left-[10%] top-[20%] w-96 h-96 rounded-full bg-[#C6A75E]/10 blur-3xl animate-float-slow z-10 pointer-events-none"></div>
+        <div class="absolute right-[5%] bottom-[30%] w-72 h-72 rounded-full bg-[#1F4D3B]/20 blur-3xl animate-float-slow z-10 pointer-events-none" style="animation-delay: -4s;"></div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-5 py-2.5 rounded-full text-sm text-white/90 mb-8 animate-fade-in-up">
+                    <span class="w-2 h-2 bg-[#C6A75E] rounded-full animate-pulse"></span>
+                    UNESCO World Heritage Site
                 </div>
 
-                <h1
-                    class="text-4xl md:text-6xl font-bold text-white leading-tight tracking-tight opacity-0 animate-fade-in-up">
-                    {{ $this->profile?->tagline ?? 'Selamat Datang di Sawahlunto Tourism' }}
+                <!-- Main Title - Mixed Case Cinematic -->
+                <h1 class="heading-font text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[0.95] tracking-tight mb-6 animate-fade-in-up"
+                    style="animation-delay: 0.15s;">
+                    {{ ucwords(str_replace(['sawahlunto', 'SAWAHLUNTO', 'Sawahlunto'], '', $this->profile?->tagline ?? 'Sawahlunto')) }}
+                    <br>
+                    <span class="bg-gradient-to-r from-[#C6A75E] via-[#e8d5a3] to-[#C6A75E] bg-clip-text text-transparent">
+                        SAWAHLUNTO
+                    </span>
                 </h1>
 
-                <p class="text-base md:text-xl text-gray-200 mt-6 mb-10 opacity-0 animate-fade-in-up delay-200">
-                    {{ $this->profile?->description ?? 'Temukan keindahan dan budaya Indonesia, mulai dari destinasi alam hingga kuliner lokal yang memikat.' }}
+                <!-- Subtitle -->
+                <p class="text-white/80 text-lg md:text-xl max-w-xl mx-auto mb-10 animate-fade-in-up font-light leading-relaxed"
+                    style="animation-delay: 0.3s;">
+                    {{ $this->profile?->description ?? 'Kota tambang bersejarah yang kini menjadi warisan dunia, menggabungkan sejarah kolonial, keindahan alam, dan kekayaan budaya Minangkabau.' }}
                 </p>
 
-                <div class="flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-center">
-                    <a href="{{ route('home') }}" wire:navigate
-                        class="inline-flex items-center justify-center rounded-full bg-[#C6A75E] px-8 py-3 text-lg font-semibold text-white shadow-xl transition duration-300 hover:bg-[#bfa662] opacity-0 animate-fade-in-up delay-300">
-                        Jelajahi Sekarang
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up"
+                    style="animation-delay: 0.45s;">
+                    <a href="#destinations" onclick="document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' })"
+                        class="group relative inline-flex items-center gap-2 px-10 py-4 bg-[#C6A75E] text-[#0a0a0a] font-bold text-base rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(198,167,94,0.5)]">
+                        <span class="relative z-10 flex items-center gap-2">
+                            Jelajahi Destinasi
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#plan"
+                        class="group inline-flex items-center gap-2 px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold text-base rounded-full hover:bg-white/20 transition-all duration-300">
+                        <svg class="w-4 h-4 text-[#C6A75E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 7m0 13V7"/>
+                        </svg>
+                        Rencanakan Perjalanan
                     </a>
                 </div>
 
-                @if (count($this->coverSlides) > 1)
-                    <div class="mt-10 flex flex-col items-center justify-center gap-3">
-                        <div class="flex items-center gap-2">
-                            <button type="button" wire:click="prevSlide"
-                                class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white shadow-lg transition hover:bg-white/20">
-                                ‹
-                            </button>
-
-                            <div class="flex items-center gap-2">
-                                @foreach ($this->coverSlides as $index => $slide)
-                                    <button type="button" wire:click="goToSlide({{ $index }})"
-                                        class="h-2.5 w-2.5 rounded-full transition-colors duration-300 {{ $this->currentSlide === $index ? 'bg-[#C6A75E]' : 'bg-white/50 hover:bg-white' }}"></button>
-                                @endforeach
-                            </div>
-
-                            <button type="button" wire:click="nextSlide"
-                                class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white shadow-lg transition hover:bg-white/20">
-                                ›
-                            </button>
-                        </div>
+                <!-- Stats Row -->
+                <div class="flex items-center justify-center gap-8 md:gap-16 animate-fade-in-up"
+                    style="animation-delay: 0.6s;">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-white heading-font">20<span class="text-[#C6A75E]">+</span></div>
+                        <div class="text-white/50 text-xs uppercase tracking-[0.25em] mt-1">Destinasi</div>
                     </div>
-                @endif
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-white heading-font">100<span class="text-[#C6A75E]">+</span></div>
+                        <div class="text-white/50 text-xs uppercase tracking-[0.25em] mt-1">Situs Sejarah</div>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-bold text-white heading-font">15K<span class="text-[#C6A75E]">+</span></div>
+                        <div class="text-white/50 text-xs uppercase tracking-[0.25em] mt-1">Pengunjung/Tahun</div>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <!-- Slide Navigation -->
+        <div x-show="slides.length > 1" x-cloak
+            class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4">
+            <button type="button" @click="prev()"
+                class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="flex items-center gap-2">
+                <template x-for="(slide, index) in slides" :key="'dot-' + index">
+                    <button type="button" @click="goTo(index)"
+                        class="transition-all duration-300 rounded-full"
+                        :class="current === index ? 'w-8 h-2 bg-[#C6A75E]' : 'w-2 h-2 bg-white/40 hover:bg-white/70'">
+                    </button>
+                </template>
+            </div>
+            <button type="button" @click="next()"
+                class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 right-8 z-30 hidden md:flex flex-col items-center gap-2 text-white/40">
+            <span class="text-xs tracking-[0.2em] uppercase rotate-90 origin-center translate-y-6">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-white/40 to-transparent animate-scroll-bounce"></div>
         </div>
     </section>
 
     <!-- FEATURED DESTINATIONS -->
-    <section wire:ignore id="destinations" class="py-16 md:py-20 w-full bg-gradient-to-b from-white to-[#F8F6F1]/50"
+    <section wire:ignore id="destinations" class="py-16 md:py-20 w-full bg-gradient-to-b from-white to-[#F8F6F1]/50 dark:from-zinc-900 dark:to-zinc-950"
         data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Header -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-                <div>
-                    <span class="uppercase text-[#C6A75E] text-sm font-semibold tracking-[0.3em] block mb-2">Destinasi
-                        Unggulan</span>
-                    <h2 class="heading-font text-3xl md:text-5xl font-bold text-[#1C1C1C]">
-                        Temukan Keajaiban Sawahlunto
-                    </h2>
-                </div>
-                <a href="{{ route('destination.index') }}"
-                    class="text-[#C6A75E] hover:text-[#1C1C1C] flex items-center gap-2 text-sm md:text-base font-medium transition-colors group">
-                    Lihat Semua
-                    <span class="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-            </div>
+            <x-ds.section-header
+                eyebrow="Destinasi Unggulan"
+                title="Temukan Keajaiban Sawahlunto"
+                align="left"
+            >
+                <x-slot:trailing>
+                    <a href="{{ route('destination.index') }}"
+                        class="text-[#C6A75E] hover:text-[#1C1C1C] flex items-center gap-2 text-sm md:text-base font-medium transition-colors group whitespace-nowrap">
+                        Lihat Semua
+                        <span class="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                </x-slot:trailing>
+            </x-ds.section-header>
 
-            <!-- Swiper Container -->
-            <div class="relative overflow-hidden">
-                {{-- @endphp --}}
-                @include('components.cards.destination', ['destinations' => $this->destinations])
+            <!-- Destination Grid -->
+            <div class="mt-8">
+                <x-cards.destination :destinations="$this->destinations" />
             </div>
         </div>
     </section>
