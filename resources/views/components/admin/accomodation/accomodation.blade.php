@@ -153,7 +153,7 @@
                         </div>
                     </flux:table.cell>
 
-                    @role('editor')
+                    @role('super-admin|admin')
                         <!-- Publikasi -->
                         <flux:table.cell>
                             <div class="flex items-center gap-2">
