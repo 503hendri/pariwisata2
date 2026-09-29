@@ -465,7 +465,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <x-ds.section-header
                 eyebrow="Kalender Budaya"
-                title="Event &amp; Festival"
+                title="Event & Festival"
                 description="Kemeriahan tahunan yang menghidupkan tradisi di ruang publik kota warisan dunia." />
 
             <div class="grid md:grid-cols-3 gap-8">
